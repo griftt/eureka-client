@@ -8,10 +8,16 @@
         <version>2.1.5.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+    <modules>
+        <module>order-common</module>
+        <module>order-client</module>
+        <module>order-server</module>
+    </modules>
     <groupId>com.griftt</groupId>
-    <artifactId>eureka-client</artifactId>
+    <artifactId>eureka-order</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>eureka-client</name>
+    <packaging>pom</packaging>
+    <name>eureka-product</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
@@ -49,7 +55,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
     </dependencies>
 
     <dependencyManagement>
@@ -65,12 +70,14 @@
     </dependencyManagement>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
 </project>

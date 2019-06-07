@@ -17,7 +17,7 @@ eureka:
     hostname: order
 feign:
   hystrix:
-    enabled: false
+    enabled: false #好像是超时重连问题
 
 server:
   port: 8181

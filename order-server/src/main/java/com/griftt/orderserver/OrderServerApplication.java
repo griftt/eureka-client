@@ -10,9 +10,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
-@ComponentScan(basePackages ="com.griftt.common")
-@EnableJpaRepositories("com.griftt.common.repository")
+@EnableFeignClients(basePackages = "com.griftt.common")
+@ComponentScan(basePackages ={"com.griftt"})
+@EnableJpaRepositories(basePackages = {"com.griftt.common"})
 @EntityScan("com.griftt.common.entity")
 public class OrderServerApplication {
     public static void main(String[] args) {

@@ -69,7 +69,7 @@ public class webConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         System.err.println("添加拦截器");
-        registry.addInterceptor(new BaseControllerInterceptor()).addPathPatterns("/*");
+        registry.addInterceptor(new BaseControllerInterceptor()).addPathPatterns("/**n");
         //super.addInterceptors(registry);
     }
     //原文：https://blog.csdn.net/weixin_41788754/article/details/82890515

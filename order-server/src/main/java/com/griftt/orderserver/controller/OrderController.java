@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("order" )
+@RequestMapping("order")
 @Slf4j
 public class OrderController {
 
@@ -28,6 +28,13 @@ public class OrderController {
     public List<Order> getOrder(){
         return  orderService.getOrderById(56);
     }
+
+    @RequestMapping("test")
+    public String test(){
+        return "ok";
+    }
+
+
     @GetMapping("/goods")
     public List<Goods> getOrderGoods(){
         List<Goods> goodsList = goodsFeign.getGoodsList();

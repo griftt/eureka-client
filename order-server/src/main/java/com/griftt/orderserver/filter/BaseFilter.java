@@ -19,6 +19,7 @@ public class BaseFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest=(HttpServletRequest)request;
         System.out.println("过滤器路径："+httpServletRequest.getRequestURI());
+         chain.doFilter(httpServletRequest,response);
     }
 
     @Override

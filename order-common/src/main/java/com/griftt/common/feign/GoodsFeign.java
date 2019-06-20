@@ -11,4 +11,7 @@ public interface GoodsFeign {
 
     @GetMapping("/goods/all")
     public List<Goods> getGoodsList();
+
+    @GetMapping("/goods/one")
+    public Goods getGoodsById(Integer id);
 }

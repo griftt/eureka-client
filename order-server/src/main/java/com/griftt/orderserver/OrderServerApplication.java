@@ -18,7 +18,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableFeignClients(basePackages = "com.griftt.common")
 @ComponentScan(basePackages ={"com.griftt"})
 @EnableJpaRepositories(basePackages = {"com.griftt.common"})
-@EntityScan("com.griftt.common.entity")
+@EntityScan("com.griftt")
 public class OrderServerApplication {
     public static void main(String[] args) {
         SpringApplication.run(OrderServerApplication.class, args);

@@ -57,12 +57,11 @@ public class OrderController {
      */
     //@HystrixCommand(fallbackMethod = "fallBack")
     //服务降级超时时间默认为1秒
-    @HystrixCommand(commandProperties = {
+    /*@HystrixCommand(commandProperties = {
             @HystrixProperty(name ="execution.isolation.thread.timeoutInMilliseconds" ,value ="2000" )
-    })
+    })*/
     @GetMapping("/goodsOne")
     public Goods getOrderGoodsById(){
-
         Goods goods = goodsOrderFeignClient.getGoodsById(21);
         log.info("goods={}",goods);
         return  goods;

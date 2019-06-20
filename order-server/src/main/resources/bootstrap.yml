@@ -32,7 +32,6 @@ feign:
   hystrix:
     enabled: true #好像是超时重连问题
 management:
-
   endpoints:
     web:
       exposure:

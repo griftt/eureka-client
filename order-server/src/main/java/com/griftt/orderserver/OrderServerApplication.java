@@ -15,7 +15,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableCircuitBreaker*/
 //代替上面三个
 @SpringCloudApplication
-@EnableFeignClients(basePackages = "com.griftt.common")
+@EnableFeignClients(basePackages ="com.griftt.common")
 @ComponentScan(basePackages ={"com.griftt"})
 @EnableJpaRepositories(basePackages = {"com.griftt.common"})
 @EntityScan("com.griftt")

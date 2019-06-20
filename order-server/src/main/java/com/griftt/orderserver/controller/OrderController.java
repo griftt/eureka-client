@@ -4,6 +4,7 @@ import com.griftt.common.entity.Goods;
 import com.griftt.common.entity.Order;
 import com.griftt.common.feign.GoodsFeign;
 import com.griftt.common.service.OrderService;
+import com.griftt.productclient.client.GoodsOrderFeignClient;
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -29,6 +30,9 @@ public class OrderController {
     @Autowired
     private GoodsFeign goodsFeign;
 
+    @Autowired
+    private GoodsOrderFeignClient goodsOrderFeignClient;
+
     @PostMapping("/list")
     public List<Order> getOrder(){
         return  orderService.getOrderById(56);
@@ -38,7 +42,6 @@ public class OrderController {
     public String test(){
         return "ok";
     }
-
 
     @GetMapping("/goods")
     public List<Goods> getOrderGoods(){
@@ -60,7 +63,7 @@ public class OrderController {
     @GetMapping("/goodsOne")
     public Goods getOrderGoodsById(){
 
-        Goods goods = goodsFeign.getGoodsById(4);
+        Goods goods = goodsOrderFeignClient.getGoodsById(21);
         log.info("goods={}",goods);
         return  goods;
     }

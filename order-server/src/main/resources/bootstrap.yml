@@ -30,9 +30,13 @@ eureka:
       defaultZone: http://localhost:8761/eureka/  #向服务中心中心注册
 feign:
   hystrix:
-    enabled: false #好像是超时重连问题
+    enabled: true #好像是超时重连问题
 management:
+
   endpoints:
     web:
       exposure:
         include:  bus-refresh # 暴露bus-refresh为了接到通知
+
+  # hystrix 超时配置  :
+

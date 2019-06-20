@@ -61,10 +61,10 @@
                 <artifactId>spring-boot-starter-amqp</artifactId>
             </dependency>
             <!--actuator 用来监控和刷新-->
-            <dependency>
+            <!--<dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-actuator</artifactId>
-            </dependency>
+            </dependency>-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-starter-config</artifactId>
@@ -90,6 +90,12 @@
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!-- 获取其他服务暴露的服务接口-->
+        <dependency>
+            <artifactId>product-client</artifactId>
+            <groupId>com.griftt</groupId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 

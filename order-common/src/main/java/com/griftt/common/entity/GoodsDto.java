@@ -10,9 +10,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
-
-
-public class Goods {
+public class GoodsDto {
 
 
     private Integer id;

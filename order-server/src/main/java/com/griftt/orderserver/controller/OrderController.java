@@ -1,10 +1,12 @@
 package com.griftt.orderserver.controller;
 
 import com.griftt.common.entity.Goods;
+import com.griftt.common.entity.GoodsDto;
 import com.griftt.common.entity.Order;
 import com.griftt.common.feign.GoodsFeign;
 import com.griftt.common.service.OrderService;
 import com.griftt.productclient.client.GoodsOrderFeignClient;
+import com.griftt.productclient.client.GoodsTestFeign;
 import com.netflix.hystrix.contrib.javanica.annotation.DefaultProperties;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
@@ -27,11 +29,36 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private GoodsFeign goodsFeign;
 
     @Autowired
     private GoodsOrderFeignClient goodsOrderFeignClient;
+
+    @Autowired
+    private GoodsTestFeign goodsTestFeign;
+
+
+    public Goods fallBack(){
+        Goods goods = new Goods();
+        goods.setBatchNo("error");
+        return goods;
+    }
+    /**
+     * 服务降级不止用在服务端和还可用在自身，屏蔽各种异常，并向前端返回指定信息
+     * @return
+     */
+    //@HystrixCommand(fallbackMethod = "fallBack")
+    //服务降级超时时间默认为1秒
+    @HystrixCommand(commandProperties = {
+            @HystrixProperty(name ="execution.isolation.thread.timeoutInMilliseconds" ,value ="2000" )
+    })
+    @GetMapping("/goodsOne")
+    public Goods getOrderGoodsById(){
+        Goods goods = goodsOrderFeignClient.getGoodsById(99);
+        log.info("goods={}",goods);
+        return  goods;
+    }
+
+
 
     @PostMapping("/list")
     public List<Order> getOrder(){
@@ -43,35 +70,43 @@ public class OrderController {
         return "ok";
     }
 
-    @GetMapping("/goods")
-    public List<Goods> getOrderGoods(){
-        List<Goods> goodsList = goodsFeign.getGoodsList();
+    /*@GetMapping("/goods")
+    public List<GoodsDto> getOrderGoods(){
+        List<GoodsDto> goodsList = goodsFeign.getGoodsList();
+        log.info("goods={}",goodsList);
+        return goodsList;
+        //return  goodsFeign.getGoodsList();
+    }*/
+
+    /**
+     * 正常feign测试 ，无熔断
+     * @return
+     */
+    @GetMapping("/goodsMore")
+    public List<Goods> getOrderGoodsMore(){
+        List<Goods> goodsList = goodsTestFeign.getGoodsMore();
         log.info("goods={}",goodsList);
         return goodsList;
         //return  goodsFeign.getGoodsList();
     }
 
     /**
-     * 服务降级不止用在服务端和还可用在自身，屏蔽各种异常，并向前端返回指定信息
+     * 测试feign的服务降级
      * @return
      */
-    //@HystrixCommand(fallbackMethod = "fallBack")
-    //服务降级超时时间默认为1秒
-    /*@HystrixCommand(commandProperties = {
-            @HystrixProperty(name ="execution.isolation.thread.timeoutInMilliseconds" ,value ="2000" )
-    })*/
-    @GetMapping("/goodsOne")
-    public Goods getOrderGoodsById(){
-        Goods goods = goodsOrderFeignClient.getGoodsById(21);
-        log.info("goods={}",goods);
-        return  goods;
+    @GetMapping("/goodsAll")
+    public List<Goods> getOrderGoodsList(){
+        List<Goods> goodsList = goodsOrderFeignClient.getGoodsList();
+        log.info("goodslist={}",goodsList);
+        return goodsList;
+        //return  goodsFeign.getGoodsList();
     }
 
     /**
      * 測試服務熔斷
      * @return
      */
-    @HystrixCommand(commandProperties = {
+      @HystrixCommand(commandProperties = {
             @HystrixProperty(name ="circuitBreaker.enabled" ,value ="true" ),// 启动熔断器
             @HystrixProperty(name ="circuitBreaker.requestVolumeThreshold" ,value ="10" ),//默认时间内 连续的请求次数
             @HystrixProperty(name ="circuitBreaker.sleepWindowInMilliseconds" ,value ="5000" ),//指定某个时间窗口，休眠这个时间后变为半熔断状态
@@ -82,14 +117,12 @@ public class OrderController {
         if(a%2==0){
             int b=a/0;
         }
-        Goods goods = goodsFeign.getGoodsById(6);
+        Goods goods = goodsOrderFeignClient.getGoodsById(99);
         log.info("goods={}",goods);
         return  goods;
     }
 
-    public Goods fallBack(){
-        Goods goods = new Goods();
-        goods.setBatchNo("error");
-        return goods;
-    }
+
+
+
 }

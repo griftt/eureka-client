@@ -1,4 +1,6 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true #用于解决 product.FeignClientSpecification', defined in null,在feign服务同名时产生
   application:
     name: order
   cloud:
@@ -8,6 +10,15 @@ spring:
         service-id: config
       profile: dev
       label: master
+  zipkin:
+    base-url: http://localhost:9411/  #将日志传送给zipkin
+  sleuth:
+    log:
+      slf4j:
+        enabled: true
+    sampler:
+      probability: 1 #日志抽样数据
+
 #    stream:
 #      bindings:
 #        myOutput:
@@ -30,12 +41,15 @@ eureka:
       defaultZone: http://localhost:8761/eureka/  #向服务中心中心注册
 feign:
   hystrix:
-    enabled: true #好像是超时重连问题
+    enabled: true #启动feign中的hystrix
 management:
   endpoints:
     web:
       exposure:
         include:  bus-refresh # 暴露bus-refresh为了接到通知
-
-  # hystrix 超时配置  :
-
+  endpoint:
+    health:
+      show-details: ALWAYS  #暴露端口
+logging:
+  level:
+    com.griftt.productclient.client: debug

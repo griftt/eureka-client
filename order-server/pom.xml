@@ -23,6 +23,10 @@
             <artifactId>order-common</artifactId>
             <version>${common.version}</version>
         </dependency>
+        <dependency>
+            <artifactId>product-client</artifactId>
+            <groupId>com.griftt</groupId>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

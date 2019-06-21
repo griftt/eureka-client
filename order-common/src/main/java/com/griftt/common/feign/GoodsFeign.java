@@ -1,17 +1,17 @@
 package com.griftt.common.feign;
 
-import com.griftt.common.entity.Goods;
+import com.griftt.common.entity.GoodsDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import java.util.List;
 
-@FeignClient(name = "product")
+//@FeignClient(name = "product")
 public interface GoodsFeign {
 
     @GetMapping("/goods/all")
-    public List<Goods> getGoodsList();
+    public List<GoodsDto> getGoodsList();
 
     @GetMapping("/goods/one")
-    public Goods getGoodsById(Integer id);
+    public GoodsDto getGoodsById(Integer id);
 }

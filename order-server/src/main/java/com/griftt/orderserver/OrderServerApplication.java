@@ -1,6 +1,7 @@
 package com.griftt.orderserver;
 
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
+import org.bytesoft.bytetcc.supports.springcloud.config.SpringCloudConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -12,22 +13,25 @@ import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboar
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 /*@SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker*/
 //代替上面三个
-@SpringCloudApplication
+@SpringCloudApplication()
 @EnableHystrixDashboard //熔断器的可视化面板
 @ComponentScan(basePackages ={"com.griftt"})
 @EnableJpaRepositories(basePackages = {"com.griftt"})
 @EntityScan(basePackages = "com.griftt")
-//@EnableFeignClients(basePackages = {"com.griftt.productclient.client"})
+@EnableFeignClients(basePackages = {"com.griftt.productclient.client"})
+//引入tcc
+@Import(SpringCloudConfiguration.class)
 public class OrderServerApplication {
-    public static void main(String
 
-                                    [] args) {
+
+    public static void main(String[] args) {
         SpringApplication.run(OrderServerApplication.class, args);
     }
 
@@ -45,4 +49,12 @@ public class OrderServerApplication {
         registrationBean.setName("HystrixMetricsStreamServlet");
         return registrationBean;
     }
+
+    /**
+     * 1.2、使用Spring Cloud的约束
+     * 服务提供方Controler必须添加@Compensable注解；
+     * 不允许对Feign/Ribbon/RestTemplate等HTTP请求自行进行封装，但允许拦截；
+     * 如果需要定制instanceId, 格式必须为${ip}:${自行指定}:${port}；
+     * 0.5.x版本仅支持Spring Boot 2.x、Spring Cloud 2.x版本；
+     */
 }

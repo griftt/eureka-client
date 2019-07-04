@@ -92,8 +92,10 @@ public class OrderController {
     }
 
     /**
+     *
      * 测试feign的服务降级
      * @return
+     *
      */
     @GetMapping("/goodsAll")
     public List<Goods> getOrderGoodsList(){
@@ -102,6 +104,7 @@ public class OrderController {
         return goodsList;
         //return  goodsFeign.getGoodsList();
     }
+
 
     /**
      * 測試服務熔斷

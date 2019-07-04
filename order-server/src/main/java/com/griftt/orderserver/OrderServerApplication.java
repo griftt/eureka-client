@@ -20,14 +20,22 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 //代替上面三个
 @SpringCloudApplication
 @EnableHystrixDashboard //熔断器的可视化面板
-@EnableFeignClients(basePackages ="com.griftt.productclient.client")
 @ComponentScan(basePackages ={"com.griftt"})
 @EnableJpaRepositories(basePackages = {"com.griftt"})
 @EntityScan(basePackages = "com.griftt")
+//@EnableFeignClients(basePackages = {"com.griftt.productclient.client"})
 public class OrderServerApplication {
-    public static void main(String[] args) {
+    public static void main(String
+
+                                    [] args) {
         SpringApplication.run(OrderServerApplication.class, args);
     }
+
+
+    /**
+     * 查看接口异常信息
+     * @return
+     */
     @Bean
     public ServletRegistrationBean getServlet() {
         HystrixMetricsStreamServlet streamServlet = new HystrixMetricsStreamServlet();

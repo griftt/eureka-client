@@ -12,6 +12,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ import java.util.List;
 @RequestMapping("order")
 @Slf4j
 //默认的熔断返回
-@DefaultProperties(defaultFallback = "fallBack")
+//@DefaultProperties(defaultFallback = "fallBack")
 public class OrderController {
 
     @Autowired
@@ -33,7 +34,7 @@ public class OrderController {
     @Autowired
     private GoodsOrderFeignClient goodsOrderFeignClient;
 
-    @Autowired
+    @Autowired(required = true)
     private GoodsTestFeign goodsTestFeign;
 
 
@@ -122,7 +123,20 @@ public class OrderController {
         return  goods;
     }
 
-
-
+    /**
+     * 测试分布式事务jta
+     * @param id
+     * @param batchNo
+     * @return
+     */
+    @GetMapping("/jta")
+    public Goods testJta(Integer id,String batchNo){
+       /* if(a%2==0){
+            int b=a/0;
+        }*/
+        Goods goods = goodsOrderFeignClient.updateGoodsById(id,batchNo);
+        log.info("goods={}",goods);
+        return  goods;
+    }
 
 }

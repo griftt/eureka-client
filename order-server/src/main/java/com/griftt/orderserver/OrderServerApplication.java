@@ -27,7 +27,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EntityScan(basePackages = "com.griftt")
 @EnableFeignClients(basePackages = {"com.griftt.productclient.client"})
 //引入tcc
-@Import(SpringCloudConfiguration.class)
+//@Import(SpringCloudConfiguration.class)
 public class OrderServerApplication {
 
 

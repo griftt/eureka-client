@@ -53,3 +53,12 @@ management:
 logging:
   level:
     com.griftt.productclient.client: debug
+# Elasticsearch
+# 9200端口是用来让HTTP REST API来访问ElasticSearch，而9300端口是传输层监听的默认端口
+elasticsearch:
+    ip: 106.52.22.169
+    port: 9300
+    pool: 5
+    #注意cluster.name需要与config/elasticsearch.yml中的cluster.name一致
+    cluster.name: elasticsearch_cluster
+
